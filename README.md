@@ -1,6 +1,6 @@
 # `react-global-state-router`
 
-[![NPM](https://img.shields.io/npm/v/@ethicdevs/react-global-state-router?color=red)](https://www.npmjs.com/package/@ethicdevs/react-global-state-router)
+[![NPM](https://img.shields.io/npm/v/@ethicdevs/react-global-state-router?color=red&v2=1)](https://www.npmjs.com/package/@ethicdevs/react-global-state-router)
 [![MIT License](https://img.shields.io/github/license/ethicdevs/react-global-state-router.svg?color=blue)](https://github.com/ethicdevs/react-global-state-router/blob/master/LICENSE)
 
 ## Installation
@@ -13,7 +13,7 @@ $ npm i @ethicdevs/react-global-state-router
 
 ---
 
-See this CodeSandBox for a [live editable demo](TODO).
+See this CodeSandBox for a [live editable demo](https://codesandbox.io/s/react-global-state-router-example-iehfz8?file=/src/App.tsx).
 Or just run `cd example && yarn && yarn start` if you have cloned the repo already.
 
 ---
@@ -80,7 +80,7 @@ import { GlobalStateProvider } from "@ethicdevs/react-global-state-hooks";
 +   return (
 +     <div>
 +       <h1>Hey, welcome!</h1>
-+       <h2>react-globa-state-router is a tiny router for the braves!</h2>
++       <h2>react-global-state-router is a tiny router for the braves!</h2>
 +      <Link screen={"JoinScreen"}>Get started!</Link>
 +    </div>
 +  );
