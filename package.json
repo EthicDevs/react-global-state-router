@@ -1,6 +1,6 @@
 {
   "name": "@ethicdevs/react-global-state-router",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A tiny cross-target (web, native) router that complements react-global-state-hooks",
   "main": "dist/index.js",
   "module": "dist/index.js",
