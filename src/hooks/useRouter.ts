@@ -1,16 +1,31 @@
+import { useStore } from "@ethicdevs/react-global-state-hooks";
 import { useContext, useEffect } from "react";
+
+import { ActionTypes } from "../state";
 import { GlobalStateRouterContext } from "../context";
 
 export const useRouter = ({
   initialScreen,
-}: { initialScreen?: string } = {}) => {
-  const ctx = useContext(GlobalStateRouterContext);
+  initialScreenArgs,
+}: {
+  initialScreen?: string;
+  initialScreenArgs?: unknown[];
+} = {}) => {
+  const { action, dispatch } = useStore();
 
   useEffect(() => {
     if (initialScreen != null) {
-      ctx.push(initialScreen);
+      dispatch(
+        action({
+          type: ActionTypes.SET_INITIAL_SCREEN,
+          payload: {
+            initialScreen,
+            args: initialScreenArgs,
+          },
+        }),
+      );
     }
-  }, [initialScreen, ctx]);
+  }, [action, dispatch, initialScreen]);
 
-  return ctx;
+  return useContext(GlobalStateRouterContext);
 };

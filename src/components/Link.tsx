@@ -57,7 +57,7 @@ export const Link: FC<CommonLinkProps & LinkProps> = ({
       _screen = pathname;
       _screen = _screen[0].toUpperCase() + _screen.substring(1);
       _href = `/${pathname}`;
-    } else if (goBack === true) {
+    } else if (goBack === true && prevScreen != null) {
       _href = `/${prevScreen[0].replace(/screen/i, "").toLowerCase()}`;
       _screen = prevScreen[0];
     }

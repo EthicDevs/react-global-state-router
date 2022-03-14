@@ -9,11 +9,13 @@ type State = {
 };
 
 export const selectCurrentScreen = (state: State) => {
-  const { screens } = state.router;
-  return screens[screens.length - 1];
+  return state?.router?.screens != null && state.router.screens.length >= 1
+    ? state.router.screens[state.router.screens.length - 1]
+    : null;
 };
 
 export const selectPreviousScreen = (state: State) => {
-  const { screens } = state.router;
-  return screens[screens.length - 2];
+  return state?.router?.screens != null && state.router.screens.length >= 2
+    ? state.router.screens[state.router.screens.length - 2]
+    : null;
 };

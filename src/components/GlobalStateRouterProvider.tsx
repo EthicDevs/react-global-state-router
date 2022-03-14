@@ -1,19 +1,14 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { useSelect, useStore } from "@ethicdevs/react-global-state-hooks";
 
+//import { ErrorBoundary } from "../components/ErrorsBoundary";
 import { GlobalStateRouterContext } from "../context";
 import { ActionTypes, selectPreviousScreen } from "../state";
 
-const getScreenUrl = (screen: string, args: unknown[]): string => {
-  const searchParams = new URLSearchParams(
-    (args?.[0] as Record<string, string>) || (String("") as string) || [],
-  );
-
+const getScreenUrl = (screen: string, _args: unknown[]): string => {
   return `${window.location.origin}/${screen
-    .replace(/Screen$/i, "")
-    .toLocaleLowerCase()}${
-    searchParams.toString().trim() !== "" ? `?${searchParams.toString()}` : ""
-  }`;
+    .replace(/screen$/i, "")
+    .toLocaleLowerCase()}`;
 };
 
 export const GlobalStateRouterProvider: FC = ({ children }) => {
@@ -69,17 +64,13 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
   );
 
   const pop = useCallback(() => {
-    const [previousScreen, previousScreenArgs] = prevScreen;
-    window.history.pushState(
-      { t: "pop", screen: previousScreen, args: previousScreenArgs },
-      "",
-      getScreenUrl(previousScreen, previousScreenArgs),
-    );
-    dispatch(
-      action({
-        type: ActionTypes.POP,
-      }),
-    );
+    if (prevScreen != null) {
+      dispatch(
+        action({
+          type: ActionTypes.POP,
+        }),
+      );
+    }
   }, [action, dispatch, prevScreen]);
 
   const ctxValue = useMemo(
