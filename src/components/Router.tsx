@@ -16,7 +16,8 @@ export const Router: FC<RouterProps> = ({ children, initialScreen }) => {
         push(screen, args);
       } else if (event.state?.t === "replace") {
         replace(screen, args);
-      } else if (event.state != null) {
+      } else if (event.state?.t !== "pop") {
+        // avoid loop also
         pop();
       } else {
         // do nothing in this case (avoid redirect loops)

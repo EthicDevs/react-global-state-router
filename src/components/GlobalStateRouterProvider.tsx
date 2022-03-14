@@ -71,7 +71,7 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
   const pop = useCallback(() => {
     const [previousScreen, previousScreenArgs] = prevScreen;
     window.history.pushState(
-      { t: "replace", screen: previousScreen, args: previousScreenArgs },
+      { t: "pop", screen: previousScreen, args: previousScreenArgs },
       "",
       getScreenUrl(previousScreen, previousScreenArgs),
     );
