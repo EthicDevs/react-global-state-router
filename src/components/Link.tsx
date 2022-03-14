@@ -68,17 +68,6 @@ export const Link: FC<CommonLinkProps & LinkProps> = ({
     };
   }, [href, goBack, prevScreen, screen]);
 
-  console.log(
-    "[link] href=",
-    href,
-    "screen=",
-    screen,
-    "realHref=",
-    realHref,
-    "realScreen=",
-    realScreen,
-  );
-
   return (
     <a
       {...rest}
