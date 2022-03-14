@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 
 import { useRouter } from "../hooks";
 
@@ -9,25 +9,28 @@ type RouterProps = {
 export const Router: FC<RouterProps> = ({ children, initialScreen }) => {
   const { push, pop, replace } = useRouter({ initialScreen });
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const onPopState = (event: PopStateEvent) => {
-        const { screen, args } = event.state;
-        if (event.state?.t === "push") {
-          push(screen, args);
-        } else if (event.state?.t === "replace") {
-          replace(screen, args);
-        } else {
-          pop();
-        }
-      };
+  const onPopState = useCallback(
+    (event: PopStateEvent) => {
+      const { screen, args } = event.state;
+      if (event.state?.t === "push") {
+        push(screen, args);
+      } else if (event.state?.t === "replace") {
+        replace(screen, args);
+      } else {
+        pop();
+      }
+    },
+    [push, replace, pop],
+  );
 
-      window.addEventListener("popstate", onPopState);
-      return () => {
-        window.removeEventListener("popstate", onPopState);
-      };
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
     }
-    return undefined;
+    window.addEventListener("popstate", onPopState);
+    return () => {
+      window.removeEventListener("popstate", onPopState);
+    };
   }, []);
 
   return <>{children}</>;

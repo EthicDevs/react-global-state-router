@@ -1,11 +1,24 @@
 import React, { FC, useCallback, useMemo } from "react";
-import { useStore } from "@ethicdevs/react-global-state-hooks";
+import { useSelect, useStore } from "@ethicdevs/react-global-state-hooks";
 
 import { GlobalStateRouterContext } from "../context";
-import { ActionTypes } from "../state";
+import { ActionTypes, selectPreviousScreen } from "../state";
+
+const getScreenUrl = (screen: string, args: unknown[]): string => {
+  const searchParams = new URLSearchParams(
+    (args?.[0] as Record<string, string>) || (String("") as string) || [],
+  );
+
+  return `${window.location.origin}/${screen
+    .replace(/Screen$/i, "")
+    .toLocaleLowerCase()}${
+    searchParams.toString().trim() !== "" ? `?${searchParams.toString()}` : ""
+  }`;
+};
 
 export const GlobalStateRouterProvider: FC = ({ children }) => {
   const { dispatch, action } = useStore();
+  const prevScreen = useSelect(selectPreviousScreen);
 
   const reset = useCallback(() => {
     dispatch(
@@ -17,17 +30,11 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
 
   const push = useCallback(
     (screen: string, ...args: unknown[]) => {
-      const searchParams = new URLSearchParams(
-        (args?.[0] as Record<string, string>) || (String("") as string) || [],
+      window.history.pushState(
+        { t: "push", screen, args },
+        "",
+        getScreenUrl(screen, args),
       );
-      const url = `${window.location.origin}/${screen
-        .replace(/Screen$/i, "")
-        .toLocaleLowerCase()}${
-        searchParams.toString().trim() !== ""
-          ? `?${searchParams.toString()}`
-          : ""
-      }`;
-      window.history.pushState({ t: "push", screen, args }, "", url);
       dispatch(
         action({
           type: ActionTypes.PUSH,
@@ -43,17 +50,11 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
 
   const replace = useCallback(
     (screen: string, ...args: unknown[]) => {
-      const searchParams = new URLSearchParams(
-        (args?.[0] as Record<string, string>) || (String("") as string) || [],
+      window.history.pushState(
+        { t: "replace", screen, args },
+        "",
+        getScreenUrl(screen, args),
       );
-      const url = `${window.location.origin}/${screen
-        .replace(/Screen$/i, "")
-        .toLocaleLowerCase()}${
-        searchParams.toString().trim() !== ""
-          ? `?${searchParams.toString()}`
-          : ""
-      }`;
-      window.history.pushState({ t: "replace", screen, args }, "", url);
       dispatch(
         action({
           type: ActionTypes.REPLACE,
@@ -68,12 +69,18 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
   );
 
   const pop = useCallback(() => {
+    const [previousScreen, previousScreenArgs] = prevScreen;
+    window.history.pushState(
+      { t: "replace", screen: previousScreen, args: previousScreenArgs },
+      "",
+      getScreenUrl(previousScreen, previousScreenArgs),
+    );
     dispatch(
       action({
         type: ActionTypes.POP,
       }),
     );
-  }, [action, dispatch]);
+  }, [action, dispatch, prevScreen]);
 
   const ctxValue = useMemo(
     () => ({

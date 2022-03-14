@@ -4,8 +4,13 @@ import {
   combineModules,
 } from "@ethicdevs/react-global-state-hooks";
 
-import { GlobalStateRouterProvider, Link, Router, Route } from "./components";
-import { GlobalStateRouterStateModule } from "./state";
+import {
+  GlobalStateRouterStateModule,
+  GlobalStateRouterProvider,
+  Link,
+  Router,
+  Route,
+} from "@ethicdevs/react-global-state-router";
 
 const OnboardingScreen: VFC = () => {
   return (
