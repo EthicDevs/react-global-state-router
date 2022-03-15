@@ -54,8 +54,6 @@ export const Router: FC<RouterProps> = ({
     }
 
     const { pathname } = window.location;
-    console.log("pathname:", pathname, window.location);
-
     if (pathname.startsWith("/http://")) {
       return undefined;
     }
@@ -63,7 +61,6 @@ export const Router: FC<RouterProps> = ({
     const screen = extractScreenFromPathname(pathname, initialScreen);
     if (screen != null) {
       // TODO: also check that screen is registered within the router first!
-      console.log("screen:", screen);
       replace(screen);
     } else {
       // Show 404?
