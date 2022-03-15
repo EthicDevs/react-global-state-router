@@ -67,5 +67,6 @@
     "hooks": {
       "pre-push": "yarn ci"
     }
-  }
+  },
+  "dependencies": {}
 }
