@@ -16,6 +16,9 @@ export { GlobalStateRouterStateModule } from "./state";
 export { selectCurrentScreen, selectPreviousScreen } from "./state";
 export { useRouter } from "./hooks";
 
+/* Helpers */
+export * from "./helpers";
+
 /* Providers */
 export { GlobalStateRouterProvider } from "./components";
 

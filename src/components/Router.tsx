@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect } from "react";
 
+import { extractScreenFromPathname } from "../helpers";
 import { useRouter } from "../hooks";
 
 type RouterProps = {
@@ -46,6 +47,30 @@ export const Router: FC<RouterProps> = ({
       window.removeEventListener("popstate", onPopState);
     };
   }, [onPopState]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const { pathname } = window.location;
+    console.log("pathname:", pathname, window.location);
+
+    if (pathname.startsWith("/http://")) {
+      return undefined;
+    }
+
+    const screen = extractScreenFromPathname(pathname, initialScreen);
+    if (screen != null) {
+      // TODO: also check that screen is registered within the router first!
+      console.log("screen:", screen);
+      replace(screen);
+    } else {
+      // Show 404?
+    }
+
+    return () => {};
+  }, []); // needs to stay empty to run only on mount/unmount.
 
   return <>{children}</>;
 };

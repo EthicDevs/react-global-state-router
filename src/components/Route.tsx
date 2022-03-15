@@ -10,10 +10,10 @@ export type RouteProps = {
 
 export const Route: VFC<RouteProps> = ({ screen, component }) => {
   const lastScreen = useSelect(selectCurrentScreen);
+  const currentScreen = lastScreen?.[0].trim().toLowerCase();
+  const normalizedRouteScreen = screen.trim().toLowerCase();
 
-  console.log("lastScreen", lastScreen, screen);
-
-  if (lastScreen?.[0].trim().toLowerCase() !== screen.trim().toLowerCase()) {
+  if (currentScreen !== normalizedRouteScreen) {
     return null;
   }
 

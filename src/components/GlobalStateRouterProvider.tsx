@@ -4,12 +4,7 @@ import { useSelect, useStore } from "@ethicdevs/react-global-state-hooks";
 //import { ErrorBoundary } from "../components/ErrorsBoundary";
 import { GlobalStateRouterContext } from "../context";
 import { ActionTypes, selectPreviousScreen } from "../state";
-
-const getScreenUrl = (screen: string, _args: unknown[]): string => {
-  return `${window.location.origin}/${screen
-    .replace(/screen$/i, "")
-    .toLocaleLowerCase()}`;
-};
+import { getScreenPathname } from "../helpers";
 
 export const GlobalStateRouterProvider: FC = ({ children }) => {
   const { dispatch, action } = useStore();
@@ -28,7 +23,7 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
       window.history.pushState(
         { t: "push", screen, args },
         "",
-        getScreenUrl(screen, args),
+        getScreenPathname(screen),
       );
       dispatch(
         action({
@@ -48,7 +43,7 @@ export const GlobalStateRouterProvider: FC = ({ children }) => {
       window.history.pushState(
         { t: "replace", screen, args },
         "",
-        getScreenUrl(screen, args),
+        getScreenPathname(screen),
       );
       dispatch(
         action({

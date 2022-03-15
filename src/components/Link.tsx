@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from "react";
 import { useSelect } from "@ethicdevs/react-global-state-hooks";
 
+import { extractScreenFromPathname, getScreenPathname } from "../helpers";
 import { selectPreviousScreen } from "../state";
 import { useRouter } from "../hooks";
 
@@ -11,22 +12,22 @@ type CommonLinkProps = {
 
 type LinkProps =
   | {
-      goBack?: boolean;
-      href: string;
-      screen?: string;
-      replace?: boolean;
+      goBack?: boolean; // x
+      screen?: string; // x
+      href: string; // !
+      replace?: boolean; // optional
     }
   | {
-      goBack?: boolean;
-      screen: string;
-      href?: string;
-      replace?: boolean;
+      goBack?: boolean; // x
+      screen: string; // !
+      href?: string; // x
+      replace?: boolean; // optional
     }
   | {
-      goBack: true;
-      screen?: string;
-      href?: string;
-      replace?: false;
+      goBack: true; // !!
+      screen?: string; // x
+      href?: string; // x
+      replace?: false; // optional
     };
 
 export const Link: FC<CommonLinkProps & LinkProps> = ({
@@ -47,18 +48,14 @@ export const Link: FC<CommonLinkProps & LinkProps> = ({
       _screen = "";
 
     if (screen != null && href == null) {
-      _href = `/${screen.replace(/screen/i, "").toLowerCase()}`;
+      _href = getScreenPathname(screen);
       _screen = screen;
     } else if (href != null && screen == null) {
-      const pathname = (
-        href.startsWith("http") ? new URL(href).pathname : href
-      ).replace("/", "");
-
-      _screen = pathname;
-      _screen = _screen[0].toUpperCase() + _screen.substring(1);
-      _href = `/${pathname}`;
+      const pathname = href.startsWith("http") ? new URL(href).pathname : href;
+      const _screen = extractScreenFromPathname(pathname) || undefined;
+      _href = _screen != null ? getScreenPathname(_screen) : href;
     } else if (goBack === true && prevScreen != null) {
-      _href = `/${prevScreen[0].replace(/screen/i, "").toLowerCase()}`;
+      _href = getScreenPathname(prevScreen[0]);
       _screen = prevScreen[0];
     }
 
