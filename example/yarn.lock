@@ -998,8 +998,7 @@
   resolved "https://registry.yarnpkg.com/@ethicdevs/react-global-state-hooks/-/react-global-state-hooks-0.4.2.tgz#02c029999fc0262180626df6e6c82b3535622cc2"
 
 "@ethicdevs/react-global-state-router@link:./..":
-  version "0.0.0"
-  uid ""
+  version "0.4.1"
 
 "@gar/promisify@^1.0.1":
   version "1.1.3"
@@ -8928,8 +8927,8 @@ terser-webpack-plugin@^1.4.3:
     worker-farm "^1.7.0"
 
 terser@^4.1.2, terser@^4.6.2, terser@^4.6.3:
-  version "4.8.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-4.8.0.tgz#63056343d7c70bb29f3af665865a46fe03a0df17"
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-4.8.1.tgz#a00e5634562de2239fd404c649051bf6fc21144f"
   dependencies:
     commander "^2.20.0"
     source-map "~0.6.1"
